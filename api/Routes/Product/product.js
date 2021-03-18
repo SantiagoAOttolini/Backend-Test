@@ -48,6 +48,7 @@ router.delete("/:productId", async (req, res) => {
   }
 });
 
+//MODIFY
 router.patch("/:productId", async (req, res) => {
   try {
     const updateProdcut = await Product.updateOne(
