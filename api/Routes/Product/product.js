@@ -37,4 +37,15 @@ router.post("/", async (req, res) => {
     res.json({ message: error });
   }
 });
+
+//DELETE
+router.delete("/:productId", async(req, res)=>{
+  try {
+    const removeProduct = await Product.remove({_id: req.params.productId}) 
+    res.json(removeProduct)
+  } catch (error) {
+    res.json({message:error})
+  }
+  
+})
 module.exports = router;
