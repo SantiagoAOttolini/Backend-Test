@@ -17,7 +17,7 @@ process.env.DB_CONNECTION,  {
   }
 );
 
-app.use("/post/product/", productsRoutes);
+app.use("/api/product/", productsRoutes);
 
 
 app.listen(3000, () => {

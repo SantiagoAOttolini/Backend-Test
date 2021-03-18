@@ -2,20 +2,27 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../../Models/product");
 
-router.post("/", (req, res) => {
+router.get("/", async(req, res)=>{
+  try {
+    const product = await Product.find()
+    res.json(product)
+  } catch (error) {
+    res.json({message:error})
+  }
+})
+
+router.post("/", async (req, res) => {
   const product = new Product({
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
     postDate: req.body.postDate,
   });
-  product
-    .save()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.json({ message: err.message });
-    });
+  try {
+    const saveProduct = await product.save();
+    res.json(saveProduct);
+  } catch (error) {
+    res.json({ message: error });
+  }
 });
 module.exports = router;
