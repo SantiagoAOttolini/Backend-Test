@@ -39,13 +39,24 @@ router.post("/", async (req, res) => {
 });
 
 //DELETE
-router.delete("/:productId", async(req, res)=>{
+router.delete("/:productId", async (req, res) => {
   try {
-    const removeProduct = await Product.remove({_id: req.params.productId}) 
-    res.json(removeProduct)
+    const removeProduct = await Product.remove({ _id: req.params.productId });
+    res.json(removeProduct);
   } catch (error) {
-    res.json({message:error})
+    res.json({ message: error });
   }
-  
-})
+});
+
+router.patch("/:productId", async (req, res) => {
+  try {
+    const updateProdcut = await Product.updateOne(
+      { _id: req.params.productId },
+      { $set: { description: req.body.description} }
+    );
+    res.json(updateProdcut);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
 module.exports = router;
