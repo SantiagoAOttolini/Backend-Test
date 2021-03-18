@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../../Models/product");
 
+//GET
 router.get("/", async (req, res) => {
   try {
     const product = await Product.find();
@@ -11,6 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//GET BY ID
 router.get("/:productId", async (req, res) => {
   try {
     const product = await Product.findById(req.params.productId);
@@ -20,6 +22,7 @@ router.get("/:productId", async (req, res) => {
   }
 });
 
+//POST
 router.post("/", async (req, res) => {
   const product = new Product({
     name: req.body.name,
