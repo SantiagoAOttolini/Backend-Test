@@ -3,13 +3,13 @@ const router = express.Router();
 const Product = require("../../Models/product");
 
 //GET
-router.get("/",async (req, res) => {
-try {
+router.get("/", async (req, res) => {
+  try {
     const product = await Product.find();
     res.json(product);
   } catch (error) {
     res.json({ message: error });
-  } 
+  }
 });
 
 //GET BY ID
@@ -38,6 +38,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+//PUT
+router.put("/:productId", async (req, res) => {
+  try {
+    let id = req.params.productId;
+    let { name, description, price, postDate } = req.body;
+    let a = await Product.updateMany(
+      { name, description, price, postDate },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.send(a);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
+
 //DELETE
 router.delete("/:productId", async (req, res) => {
   try {
@@ -53,7 +72,7 @@ router.patch("/:productId", async (req, res) => {
   try {
     const updateProdcut = await Product.updateOne(
       { _id: req.params.productId },
-      { $set: { description: req.body.description} }
+      { $set: { description: req.body.description } }
     );
     res.json(updateProdcut);
   } catch (error) {
