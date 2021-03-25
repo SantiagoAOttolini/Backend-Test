@@ -3,13 +3,13 @@ const router = express.Router();
 const Product = require("../../Models/product");
 
 //GET
-router.get("/", async (req, res) => {
-  try {
+router.get("/",async (req, res) => {
+try {
     const product = await Product.find();
     res.json(product);
   } catch (error) {
     res.json({ message: error });
-  }
+  } 
 });
 
 //GET BY ID
