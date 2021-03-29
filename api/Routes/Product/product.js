@@ -39,22 +39,17 @@ router.post("/", async (req, res) => {
 });
 
 //PUT
-router.put("/:productId", async (req, res) => {
-  try {
-    let id = req.params.productId;
-    let { name, description, price, postDate } = req.body;
-    let a = await Product.updateMany(
-      { name, description, price, postDate },
-      {
-        where: {
-          id,
-        },
-      }
-    );
-    res.send(a);
-  } catch (error) {
-    res.json({ message: error });
+router.put("/:productId", (req, res) => {
+let id = req.params.productId
+let update = req.body
+
+Product.findByIdAndUpdate(id, update, (err, productUpdate) => {
+  if (err) {
+    res.status(500).send({message: err.message});
   }
+  res.status(200).send({product: productUpdate})
+})
+    
 });
 
 //DELETE
@@ -80,3 +75,26 @@ router.patch("/:productId", async (req, res) => {
   }
 });
 module.exports = router;
+ /*  try {
+    let id = req.params.productId;
+    let name = req.body.name
+    let description = req.body.description
+    let price = req.body.price
+    let postDate = req.body.postDate
+    
+
+    let index = Product.findIndex((product)=>{
+      return (product.id == id) 
+    })
+
+    if (index>=0) {
+      let prd  = Product[index]
+      prd.name = name
+      prd.description = description
+      prd.price = price
+      prd.postDate = postDate
+      res.json(prd)
+    }
+  } catch (error) {
+    res.json({ message: error });
+  } */
